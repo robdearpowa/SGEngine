@@ -5,8 +5,9 @@
  */
 package sgengine.entity;
 
-import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import sgengine.Main;
+import sgengine.inteface.SpriteRenderer;
 import sgengine.model.Data2D;
 import sgengine.model.Entity;
 import sgengine.model.Sprite;
@@ -16,9 +17,8 @@ import sgengine.ui.WindowWrapper.KeyEventListener;
  *
  * @author pi
  */
-public class TestEntity extends Entity implements KeyEventListener {
+public class TestEntity extends Entity implements SpriteRenderer, KeyEventListener {
 
-    private Data2D position;
     private Data2D horizontalInput;
     private Data2D verticalInput;
     private Data2D movement;
@@ -35,14 +35,14 @@ public class TestEntity extends Entity implements KeyEventListener {
         sprite = new Sprite("simpleguy_small.png", new Data2D(8, 8));
 
         getMainWindow().addKeyEventListener(this);
-
     }
 
     @Override
     public void update() {
 
-        if (verticalInput != Data2D.ONE && verticalInput != Data2D.ZERO) {
-            movement.setY(0);
+        movement.setX(0);
+        movement.setY(0);
+        if (!verticalInput.equals(Data2D.ONE) && !verticalInput.equals(Data2D.ZERO)) {
             if (verticalInput.getX() == 1) {
                 movement.setY(-1);
             }
@@ -52,8 +52,7 @@ public class TestEntity extends Entity implements KeyEventListener {
             }
         }
 
-        if (horizontalInput != Data2D.ONE && horizontalInput != Data2D.ZERO) {
-            movement.setX(0);
+        if (!horizontalInput.equals(Data2D.ONE) && !horizontalInput.equals(Data2D.ZERO)) {
             if (horizontalInput.getX() == 1) {
                 movement.setX(-1);
             }
@@ -67,26 +66,26 @@ public class TestEntity extends Entity implements KeyEventListener {
 
         position.plus(movement);
 
-        if (position.getX() > getMainWindow().getScaledDimension().width - 8) {
+        if (position.getX() > Main.WIDTH - 8) {
             position.setX(0);
         }
 
-        if (position.getY() > getMainWindow().getScaledDimension().height - 8) {
+        if (position.getY() > Main.HEIGHT - 8) {
             position.setY(0);
         }
 
         if (position.getX() < 0) {
-            position.setX(getMainWindow().getScaledDimension().width - 8);
+            position.setX(Main.WIDTH - 8);
         }
 
         if (position.getY() < 0) {
-            position.setY(getMainWindow().getScaledDimension().height - 8);
+            position.setY(Main.HEIGHT - 8);
         }
     }
 
     @Override
-    public void draw(Graphics2D g2d) {
-        sprite.draw(g2d, position);
+    public Sprite renderSprite() {
+        return sprite;
     }
 
     @Override
@@ -132,5 +131,4 @@ public class TestEntity extends Entity implements KeyEventListener {
                 break;
         }
     }
-
 }

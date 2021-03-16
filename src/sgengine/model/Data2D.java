@@ -27,6 +27,19 @@ public class Data2D {
         this.y = y;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        boolean result = false;
+
+        if (obj instanceof Data2D) {
+            Data2D other = (Data2D) obj;
+
+            result = (x == other.x && y == other.y);
+        }
+
+        return result;
+    }
+
     public int getX() {
         return x;
     }

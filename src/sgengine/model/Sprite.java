@@ -5,7 +5,6 @@
  */
 package sgengine.model;
 
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
@@ -22,6 +21,10 @@ public class Sprite {
     public Sprite(String resource, Data2D size) {
         setResource(resource);
         setSize(size);
+    }
+
+    public Sprite(BufferedImage spriteData) {
+        this.spriteData = spriteData;
     }
 
     public Data2D getSize() {
@@ -41,10 +44,12 @@ public class Sprite {
         loadSpriteData();
     }
 
-    public void draw(Graphics2D g2d, Data2D where) {
-        if (spriteData != null) {
-            g2d.drawImage(spriteData, where.getX(), where.getY(), size.getX(), size.getY(), null, null);
-        }
+    public BufferedImage getSpriteData() {
+        return spriteData;
+    }
+
+    public void setSpriteData(BufferedImage spriteData) {
+        this.spriteData = spriteData;
     }
 
     private void loadSpriteData() {

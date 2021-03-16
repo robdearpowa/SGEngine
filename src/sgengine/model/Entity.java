@@ -5,7 +5,6 @@
  */
 package sgengine.model;
 
-import java.awt.Graphics2D;
 import sgengine.logic.Controller;
 import sgengine.ui.WindowWrapper;
 
@@ -15,15 +14,14 @@ import sgengine.ui.WindowWrapper;
  */
 public abstract class Entity {
 
-    private int drawOrder = 0;
+    protected int drawOrder = 0;
+
+    protected Data2D position = new Data2D(0, 0);
 
     public void start() {
     }
 
     public void update() {
-    }
-
-    public void draw(Graphics2D g2d) {
     }
 
     public int getDrawOrder() {
@@ -34,7 +32,15 @@ public abstract class Entity {
         this.drawOrder = drawOrder;
     }
 
-    public WindowWrapper getMainWindow() {
+    public Data2D getPosition() {
+        return position;
+    }
+
+    public void setPosition(Data2D position) {
+        this.position = position;
+    }
+
+    protected WindowWrapper getMainWindow() {
         return Controller.getInstance().getMainWindow();
     }
 }

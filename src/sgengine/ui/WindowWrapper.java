@@ -16,7 +16,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import sgengine.model.Entity;
+import sgengine.entity.Camera;
 
 /**
  *
@@ -124,7 +124,7 @@ public class WindowWrapper {
         mainFrame = new JFrame(title);
         System.out.println("Frame init");
         mainFrame.setLayout(new BorderLayout());
-        mainFrame.setResizable(false);
+        //mainFrame.setResizable(false);
 
         mainPanel = new JPanel();
         mainPanel.setVisible(true);
@@ -197,19 +197,19 @@ public class WindowWrapper {
         }
     }
 
-    public void drawEntity(Entity entity) {
-        Graphics2D g2d = (Graphics2D) currentFrame.getGraphics();
+    public void renderCamera(Camera entity) {
+        Graphics2D g2d = (Graphics2D) mainPanel.getGraphics();
         g2d.setPaintMode();
         g2d.scale(scaleX, scaleY);
         entity.draw(g2d);
     }
 
     public void prepareGraphics() {
-        currentFrame = new BufferedImage(mainPanel.getWidth(), mainPanel.getHeight(), BufferedImage.TYPE_INT_RGB);
+        //currentFrame = new BufferedImage(mainPanel.getWidth(), mainPanel.getHeight(), BufferedImage.TYPE_INT_RGB);
     }
 
     public void disposeGraphics() {
-        mainPanel.getGraphics().drawImage(currentFrame, 0, 0, null);
+        //mainPanel.getGraphics().drawImage(currentFrame, 0, 0, null);
         mainPanel.getGraphics().dispose();
     }
 

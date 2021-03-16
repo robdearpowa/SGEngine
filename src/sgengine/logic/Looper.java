@@ -5,10 +5,6 @@
  */
 package sgengine.logic;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import sgengine.model.Entity;
 import sgengine.model.Scene;
 import sgengine.ui.WindowWrapper;
 
@@ -140,23 +136,11 @@ public class Looper {
 
         try {
             if (currentScene != null) {
-                //Copio l'array delle entità della scena per poi ordiarlo per drawingOrder
-                ArrayList<Entity> orderedEntities = new ArrayList<Entity>(currentScene.getEntityList());
-                Collections.sort(orderedEntities, new Comparator() {
-                    @Override
-                    public int compare(Object o1, Object o2) {
-                        Entity e1 = (Entity) o1;
-                        Entity e2 = (Entity) o2;
-
-                        return e1.getDrawOrder() - e2.getDrawOrder();
-                    }
-                });
-
                 Controller.getInstance().getMainWindow().prepareGraphics();
 
                 //Ora che le entità sono ordinate per drawingOrder posso procedere a disegnarle
-                orderedEntities.forEach(e -> {
-                    Controller.getInstance().getMainWindow().drawEntity(e);
+                currentScene.getCameraList().forEach(c -> {
+                    Controller.getInstance().getMainWindow().renderCamera(c);
                 });
 
                 Controller.getInstance().getMainWindow().disposeGraphics();

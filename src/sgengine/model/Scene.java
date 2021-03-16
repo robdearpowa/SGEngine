@@ -6,6 +6,8 @@
 package sgengine.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import sgengine.entity.Camera;
 
 /**
  *
@@ -29,4 +31,29 @@ public class Scene {
         return entityList;
     }
 
+    public ArrayList<Entity> getEntityListInDrawingOrder() {
+        //Copio l'array delle entità della scena per poi ordiarlo per drawingOrder
+        ArrayList<Entity> orderedEntities = new ArrayList<Entity>(entityList);
+        Collections.sort(orderedEntities, (Object o1, Object o2) -> {
+            Entity e1 = (Entity) o1;
+            Entity e2 = (Entity) o2;
+
+            return e1.getDrawOrder() - e2.getDrawOrder();
+        });
+
+        return orderedEntities;
+    }
+
+    public ArrayList<Camera> getCameraList() {
+        ArrayList<Entity> eList = getEntityListInDrawingOrder();
+        ArrayList<Camera> cList = new ArrayList();
+
+        eList.forEach(e -> {
+            if (e instanceof Camera) {
+                cList.add((Camera) e);
+            }
+        });
+
+        return cList;
+    }
 }

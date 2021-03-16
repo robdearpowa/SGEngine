@@ -6,6 +6,7 @@
 package sgengine;
 
 import sgengine.entity.Background;
+import sgengine.entity.Camera;
 import sgengine.entity.GameManager;
 import sgengine.entity.TestEntity;
 import sgengine.logic.Controller;
@@ -40,9 +41,11 @@ public class Main {
         Entity pippo = new TestEntity();
         Entity bg = new Background();
         Entity gameManager = new GameManager();
+        Entity camera = new Camera();
         testScene.getEntityList().add(pippo);
         testScene.getEntityList().add(bg);
         testScene.getEntityList().add(gameManager);
+        testScene.getEntityList().add(camera);
 
         mainLooper.setCurrentScene(testScene);
 

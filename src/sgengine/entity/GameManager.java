@@ -6,22 +6,28 @@
 package sgengine.entity;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
+import sgengine.inteface.TextRenderer;
 import sgengine.model.Entity;
+import sgengine.model.Sprite;
 
 /**
  *
  * @author pi
  */
-public class GameManager extends Entity {
+public class GameManager extends Entity implements TextRenderer {
 
     private long lastTime = 0;
+    private long lastTimeFps = 0;
+    private float lastFps = 0;
+    private Sprite sprite;
 
     @Override
     public void start() {
         getMainWindow().setScaleX(3);
         getMainWindow().setScaleY(3);
         setDrawOrder(100);
+        position.setX(0);
+        position.setY(10);
     }
 
     @Override
@@ -30,7 +36,12 @@ public class GameManager extends Entity {
     }
 
     @Override
-    public void draw(Graphics2D g2d) {
+    public Color getTextColor() {
+        return Color.white;
+    }
+
+    @Override
+    public String renderText() {
         long now = System.currentTimeMillis();
 
         float frameTime = (now - lastTime) / 1000f;
@@ -40,10 +51,13 @@ public class GameManager extends Entity {
             fps = 1f / frameTime;
         }
 
+        if (now > lastTimeFps + 500) {
+            lastFps = fps;
+            lastTimeFps = now;
+        }
+
         lastTime = now;
 
-        g2d.setColor(Color.white);
-        g2d.drawString(String.valueOf(fps), 0, 10);
+        return String.valueOf(lastFps);
     }
-
 }
