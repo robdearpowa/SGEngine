@@ -16,7 +16,7 @@ import sgengine.ui.WindowWrapper;
 public class Controller {
 
     public static String MAIN_WINDOW_TAG = "mainWindow";
-    private static Controller instance = null;
+    private static volatile Controller instance = null;
 
     public static Controller getInstance() {
         if (instance == null) {

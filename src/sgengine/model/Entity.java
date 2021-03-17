@@ -18,6 +18,8 @@ public abstract class Entity {
 
     protected Data2D position = new Data2D(0, 0);
 
+    protected String tag = "default";
+
     public void start() {
     }
 
@@ -40,7 +42,19 @@ public abstract class Entity {
         this.position = position;
     }
 
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
     protected WindowWrapper getMainWindow() {
         return Controller.getInstance().getMainWindow();
+    }
+
+    protected Scene getCurrentScene() {
+        return Controller.getInstance().getMainLooper().getCurrentScene();
     }
 }

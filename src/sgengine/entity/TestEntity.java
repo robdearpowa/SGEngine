@@ -24,6 +24,7 @@ public class TestEntity extends Entity implements SpriteRenderer, KeyEventListen
     private Data2D movement;
     private float movementSpeed;
     private Sprite sprite;
+    private Camera camera;
 
     @Override
     public void start() {
@@ -35,6 +36,8 @@ public class TestEntity extends Entity implements SpriteRenderer, KeyEventListen
         sprite = new Sprite("simpleguy_small.png", new Data2D(8, 8));
 
         getMainWindow().addKeyEventListener(this);
+
+        camera = (Camera) getCurrentScene().getEntityByTag("mainCamera");
     }
 
     @Override
@@ -80,6 +83,13 @@ public class TestEntity extends Entity implements SpriteRenderer, KeyEventListen
 
         if (position.getY() < 0) {
             position.setY(Main.HEIGHT - 8);
+        }
+
+        if (camera != null) {
+            Data2D cameraPos = position.copy();
+            cameraPos.plus(new Data2D(-Main.WIDTH / 2, -Main.HEIGHT / 2));
+
+            camera.setPosition(cameraPos);
         }
     }
 

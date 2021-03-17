@@ -56,6 +56,10 @@ public class Data2D {
         this.y = y;
     }
 
+    public Data2D copy() {
+        return new Data2D(this.x, this.y);
+    }
+
     public void plus(Data2D other) {
         this.x += other.x;
         this.y += other.y;

@@ -27,6 +27,10 @@ public class Camera extends Entity {
     private BufferedImage frameToRender;
     private Data2D renderingResolution;
 
+    public Camera() {
+        tag = "mainCamera";
+    }
+
     @Override
     public void start() {
         drawOrder = 200;
@@ -69,7 +73,7 @@ public class Camera extends Entity {
 
             fg2d.dispose();
 
-            g2d.drawImage(frameToRender, position.getX(), position.getY(), panelDimension.width, panelDimension.height, null);
+            g2d.drawImage(frameToRender, 0, 0, panelDimension.width, panelDimension.height, null);
         }
     }
 }

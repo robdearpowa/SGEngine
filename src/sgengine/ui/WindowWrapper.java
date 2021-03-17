@@ -8,6 +8,7 @@ package sgengine.ui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
@@ -189,6 +190,19 @@ public class WindowWrapper {
 
         mainFrame.setVisible(true);
         updateScreen();
+    }
+
+    public void setFullscreen(boolean fullScreen) {
+        if (mainFrame != null) {
+
+            if (fullScreen) {
+                mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(mainFrame);
+            } else {
+                GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(null);
+            }
+
+        }
     }
 
     public void closeWindow() {

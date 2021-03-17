@@ -42,10 +42,10 @@ public class Main {
         Entity bg = new Background();
         Entity gameManager = new GameManager();
         Entity camera = new Camera();
-        testScene.getEntityList().add(pippo);
-        testScene.getEntityList().add(bg);
-        testScene.getEntityList().add(gameManager);
-        testScene.getEntityList().add(camera);
+        testScene.addToEntityList(pippo);
+        testScene.addToEntityList(bg);
+        testScene.addToEntityList(gameManager);
+        testScene.addToEntityList(camera);
 
         mainLooper.setCurrentScene(testScene);
 

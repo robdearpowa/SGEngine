@@ -6,8 +6,10 @@
 package sgengine.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import sgengine.entity.Camera;
+import sgengine.logic.Controller;
 
 /**
  *
@@ -27,13 +29,29 @@ public class Scene {
         this.entityList = new ArrayList();
     }
 
+    public void addToEntityList(Entity e) {
+        entityList.add(e);
+        if (Controller.getInstance().getMainLooper().isIsRunning() && Controller.getInstance().getMainLooper().getCurrentScene() == this) {
+            e.start();
+        }
+    }
+
+    public void addAllToEntityList(Collection<Entity> list) {
+        entityList.addAll(list);
+        if (Controller.getInstance().getMainLooper().isIsRunning() && Controller.getInstance().getMainLooper().getCurrentScene() == this) {
+            list.forEach(e -> {
+                e.start();
+            });
+        }
+    }
+
     public ArrayList<Entity> getEntityList() {
-        return entityList;
+        return new ArrayList(entityList);
     }
 
     public ArrayList<Entity> getEntityListInDrawingOrder() {
         //Copio l'array delle entità della scena per poi ordiarlo per drawingOrder
-        ArrayList<Entity> orderedEntities = new ArrayList<Entity>(entityList);
+        ArrayList<Entity> orderedEntities = new ArrayList(entityList);
         Collections.sort(orderedEntities, (Object o1, Object o2) -> {
             Entity e1 = (Entity) o1;
             Entity e2 = (Entity) o2;
@@ -55,5 +73,17 @@ public class Scene {
         });
 
         return cList;
+    }
+
+    public Entity getEntityByTag(String tag) {
+        ArrayList<Entity> eList = getEntityList();
+
+        for (int i = 0; i < eList.size(); i++) {
+            if (eList.get(i).getTag().equals(tag)) {
+                return eList.get(i);
+            }
+        }
+
+        return null;
     }
 }
