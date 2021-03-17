@@ -21,11 +21,12 @@ public class TestTree extends Entity implements SpriteRenderer {
     @Override
     public void start() {
         sprite = new Sprite("simpletree.png", new Data2D(8, 8));
+        sprite.setPivot(new Data2D(4, 8));
     }
 
     @Override
     public void update() {
-
+        setDrawOrder(position.getY());
     }
 
     @Override

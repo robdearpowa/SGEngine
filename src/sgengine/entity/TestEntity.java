@@ -34,6 +34,7 @@ public class TestEntity extends Entity implements SpriteRenderer, KeyEventListen
         movement = new Data2D();
         movementSpeed = 1;
         sprite = new Sprite("simpleguy_small.png", new Data2D(8, 8));
+        sprite.setPivot(new Data2D(4, 8));
 
         getMainWindow().addKeyEventListener(this);
 
@@ -93,6 +94,8 @@ public class TestEntity extends Entity implements SpriteRenderer, KeyEventListen
 
             camera.setPosition(cameraPos);
         }
+
+        setDrawOrder(position.getY());
     }
 
     @Override

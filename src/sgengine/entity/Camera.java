@@ -55,17 +55,23 @@ public class Camera extends Entity {
                     Sprite sprite = ((SpriteRenderer) entity).renderSprite();
                     BufferedImage spriteData = sprite.getSpriteData();
 
-                    int flippedH = (sprite.isFlippedHorizontal() ? -1 : 1);
-                    int flippedV = (sprite.isFlippedVertical() ? -1 : 1);
+                    Data2D flipped = new Data2D(
+                            (sprite.isFlippedHorizontal() ? -1 : 1),
+                            (sprite.isFlippedVertical() ? -1 : 1)
+                    );
 
-                    int offsetH = (sprite.isFlippedHorizontal() ? spriteData.getWidth() : 0);
-                    int offsetV = (sprite.isFlippedVertical() ? spriteData.getHeight() : 0);
+                    Data2D offset = new Data2D(
+                            (sprite.isFlippedHorizontal() ? spriteData.getWidth() : 0),
+                            (sprite.isFlippedVertical() ? spriteData.getHeight() : 0)
+                    );
+
+                    Data2D pivot = sprite.getPivot();
 
                     fg2d.drawImage(spriteData,
-                            ePos.getX() - position.getX() + offsetH,
-                            ePos.getY() - position.getY() + offsetV,
-                            spriteData.getWidth() * flippedH,
-                            spriteData.getHeight() * flippedV,
+                            ePos.getX() - position.getX() + offset.getX() - pivot.getX(),
+                            ePos.getY() - position.getY() + offset.getY() - pivot.getY(),
+                            spriteData.getWidth() * flipped.getX(),
+                            spriteData.getHeight() * flipped.getY(),
                             null);
                 }
 
