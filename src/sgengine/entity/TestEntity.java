@@ -58,9 +58,11 @@ public class TestEntity extends Entity implements SpriteRenderer, KeyEventListen
         if (!horizontalInput.equals(Data2D.ONE) && !horizontalInput.equals(Data2D.ZERO)) {
             if (horizontalInput.getX() == 1) {
                 movement.setX(-1);
+                sprite.setFlippedHorizontal(true);
             }
 
             if (horizontalInput.getY() == 1) {
+                sprite.setFlippedHorizontal(false);
                 movement.setX(1);
             }
         }

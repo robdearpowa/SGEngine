@@ -17,14 +17,20 @@ public class Sprite {
     private Data2D size;
     private BufferedImage spriteData;
     private String resource;
+    private boolean flippedHorizontal;
+    private boolean flippedVertical;
 
     public Sprite(String resource, Data2D size) {
         setResource(resource);
         setSize(size);
+        setFlippedHorizontal(false);
+        setFlippedVertical(false);
     }
 
     public Sprite(BufferedImage spriteData) {
-        this.spriteData = spriteData;
+        setSpriteData(spriteData);
+        setFlippedHorizontal(false);
+        setFlippedVertical(false);
     }
 
     public Data2D getSize() {
@@ -62,6 +68,22 @@ public class Sprite {
                 e.printStackTrace();
             }
         }
+    }
+
+    public boolean isFlippedHorizontal() {
+        return flippedHorizontal;
+    }
+
+    public void setFlippedHorizontal(boolean flippedHorizontal) {
+        this.flippedHorizontal = flippedHorizontal;
+    }
+
+    public boolean isFlippedVertical() {
+        return flippedVertical;
+    }
+
+    public void setFlippedVertical(boolean flippedVertical) {
+        this.flippedVertical = flippedVertical;
     }
 
 }
