@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.Collections;
 import sgengine.entity.Camera;
 import sgengine.logic.Controller;
+import sgengine.logic.ResourceManager;
 
 /**
  *
@@ -23,10 +24,15 @@ public class Scene {
     private Scene() {
 
     }
-
+    
     public Scene(String tag) {
         this.tag = tag;
         this.entityList = new ArrayList();
+    }
+
+    public Scene(String tag, String... audioResToPreload) {
+        this(tag);
+        ResourceManager.getInstance().preloadAudio(audioResToPreload);
     }
 
     public void addToEntityList(Entity e) {
@@ -85,5 +91,14 @@ public class Scene {
         }
 
         return null;
+    }
+
+    public void killEntity(Entity e) {
+        entityList.remove(e);
+    }
+
+    public void killEntityByTag(String tag) {
+        Entity e = getEntityByTag(tag);
+        killEntity(e);
     }
 }

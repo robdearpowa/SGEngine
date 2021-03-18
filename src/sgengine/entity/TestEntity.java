@@ -25,6 +25,9 @@ public class TestEntity extends Entity implements SpriteRenderer, KeyEventListen
     private float movementSpeed;
     private Sprite sprite;
     private Camera camera;
+    private boolean shooting;
+    private int shots = 0;
+    private int maxShots = 1;
 
     @Override
     public void start() {
@@ -35,6 +38,7 @@ public class TestEntity extends Entity implements SpriteRenderer, KeyEventListen
         movementSpeed = 1;
         sprite = new Sprite("simpleguy_small.png", new Data2D(8, 8));
         sprite.setPivot(new Data2D(4, 8));
+        shooting = false;
 
         getMainWindow().addKeyEventListener(this);
 
@@ -95,6 +99,15 @@ public class TestEntity extends Entity implements SpriteRenderer, KeyEventListen
             camera.setPosition(cameraPos);
         }
 
+        if (shooting) {
+            if (shots < maxShots) {
+                spawnBullet();
+                shots++;
+            }
+        } else {
+            shots = 0;
+        }
+
         setDrawOrder(position.getY());
     }
 
@@ -124,6 +137,9 @@ public class TestEntity extends Entity implements SpriteRenderer, KeyEventListen
             case KeyEvent.VK_D:
                 horizontalInput.setY(1);
                 break;
+            case KeyEvent.VK_SPACE:
+                shooting = true;
+                break;
         }
     }
 
@@ -144,6 +160,18 @@ public class TestEntity extends Entity implements SpriteRenderer, KeyEventListen
             case KeyEvent.VK_D:
                 horizontalInput.setY(0);
                 break;
+            case KeyEvent.VK_SPACE:
+                shooting = false;
+                break;
         }
+    }
+
+    private void spawnBullet() {
+        BulletEntity b = new BulletEntity();
+
+        b.setPosition(position.copy());
+        b.setDirection(new Data2D(1, 0));
+
+        getCurrentScene().addToEntityList(b);
     }
 }

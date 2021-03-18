@@ -57,4 +57,8 @@ public abstract class Entity {
     protected Scene getCurrentScene() {
         return Controller.getInstance().getMainLooper().getCurrentScene();
     }
+
+    protected void kill() {
+        getCurrentScene().killEntity(this);
+    }
 }

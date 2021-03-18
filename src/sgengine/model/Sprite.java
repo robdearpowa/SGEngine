@@ -6,7 +6,7 @@
 package sgengine.model;
 
 import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
+import sgengine.logic.ResourceManager;
 
 /**
  *
@@ -62,15 +62,7 @@ public class Sprite {
     }
 
     private void loadSpriteData() {
-        spriteData = null;
-
-        if (resource != null) {
-            try {
-                spriteData = ImageIO.read(getClass().getResourceAsStream("/assets/" + resource));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        spriteData = ResourceManager.getInstance().loadImage(resource);
     }
 
     public boolean isFlippedHorizontal() {
