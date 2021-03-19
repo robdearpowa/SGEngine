@@ -28,7 +28,7 @@ public class BulletEntity extends Entity implements SpriteRenderer {
         sprite = new Sprite("simple_bullet.png", new Data2D(4, 4));
         speed = 2;
         life = System.currentTimeMillis();
-        Audio audio = new Audio("shoot1.wav");
+        Audio audio = new Audio("shoot2.wav");
         audio.playSoundClip();
     }
 
