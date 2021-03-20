@@ -29,18 +29,32 @@ public class Audio {
 
     public void setResource(String resource) {
         this.resource = resource;
-    }
-
-    public synchronized void playSoundClip() {
         try {
             soundClip = ResourceManager.getInstance().loadAudio(resource);
-            System.out.println("About to play sound");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public synchronized void play() {
+        try {
             soundClip.setMicrosecondPosition(0);
             soundClip.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+
+    public boolean isPlaying() {
+        return soundClip != null ? soundClip.isRunning() : false;
+    }
+
+    public void stop() {
+        if (isPlaying()) {
+            soundClip.stop();
+        }
     }
 
 }

@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import sgengine.inteface.TextRenderer;
 import sgengine.logic.Controller;
+import sgengine.model.Audio;
 import sgengine.model.Data2D;
 import sgengine.model.Entity;
 import sgengine.model.Sprite;
@@ -27,6 +28,7 @@ public class GameManager extends Entity implements TextRenderer, KeyEventListene
     private Sprite sprite;
     private ArrayList<Entity> treeList;
     private boolean currentFullscreenState;
+    private Audio bgMusic;
 
     @Override
     public void start() {
@@ -60,11 +62,15 @@ public class GameManager extends Entity implements TextRenderer, KeyEventListene
 
         getCurrentScene().addAllToEntityList(treeList);
         getMainWindow().addKeyEventListener(this);
+
+        bgMusic = new Audio("bg1.wav");
     }
 
     @Override
     public void update() {
-
+        if (!bgMusic.isPlaying()) {
+            bgMusic.play();
+        }
     }
 
     @Override

@@ -29,7 +29,7 @@ public class BulletEntity extends Entity implements SpriteRenderer {
         speed = 2;
         life = System.currentTimeMillis();
         Audio audio = new Audio("shoot2.wav");
-        audio.playSoundClip();
+        audio.play();
     }
 
     @Override

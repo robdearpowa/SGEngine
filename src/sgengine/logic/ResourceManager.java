@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.DataLine;
+import javax.sound.sampled.Mixer;
 
 /**
  *
@@ -68,10 +68,24 @@ public class ResourceManager {
 
         if (resource != null) {
             try {
+
+                Mixer.Info mInfo = null;
+
+                for (Mixer.Info m : AudioSystem.getMixerInfo()) {
+                    if (m.getName().contains("default")) {
+                        mInfo = m;
+                        break;
+                    }
+                }
+
                 audioStream = AudioSystem.getAudioInputStream(getClass().getResource("/assets/" + resource));
-                DataLine.Info info = new DataLine.Info(Clip.class, audioStream.getFormat());
-                clip = (Clip) AudioSystem.getLine(info);
+                clip = AudioSystem.getClip(mInfo);
                 clip.open(audioStream);
+
+                System.out.println("Audio clip isOpen: " + clip.isOpen());
+                while (!clip.isOpen()) {
+                    Thread.sleep(10);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -88,5 +102,20 @@ public class ResourceManager {
         for (String aRes : audioArray) {
             loadAudio(aRes);
         }
+    }
+
+    public void flushAudio(String resource) {
+        if (audioMap.containsKey(resource)) {
+            audioMap.get(resource).close();
+            audioMap.remove(resource);
+        }
+    }
+
+    public void flushAllAudios() {
+        audioMap.values().forEach(a -> {
+            a.close();
+        });
+
+        audioMap.clear();
     }
 }
