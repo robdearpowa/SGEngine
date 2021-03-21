@@ -6,7 +6,6 @@
 package sgengine.entity;
 
 import java.awt.event.KeyEvent;
-import sgengine.Main;
 import sgengine.inteface.SpriteRenderer;
 import sgengine.model.Data2D;
 import sgengine.model.Entity;
@@ -76,25 +75,9 @@ public class TestEntity extends Entity implements SpriteRenderer, KeyEventListen
 
         position.plus(movement);
 
-        if (position.getX() > Main.WIDTH - 8) {
-            position.setX(0);
-        }
-
-        if (position.getY() > Main.HEIGHT - 8) {
-            position.setY(0);
-        }
-
-        if (position.getX() < 0) {
-            position.setX(Main.WIDTH - 8);
-        }
-
-        if (position.getY() < 0) {
-            position.setY(Main.HEIGHT - 8);
-        }
-
         if (camera != null) {
             Data2D cameraPos = position.copy();
-            cameraPos.plus(new Data2D(-Main.WIDTH / 2, -Main.HEIGHT / 2));
+            cameraPos.plus(new Data2D(-Camera.DEFAULT_WIDTH / 2, -Camera.DEFAULT_HEIGHT / 2));
 
             camera.setPosition(cameraPos);
         }

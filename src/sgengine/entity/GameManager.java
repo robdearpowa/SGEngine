@@ -29,14 +29,15 @@ public class GameManager extends Entity implements TextRenderer, KeyEventListene
     private ArrayList<Entity> treeList;
     private boolean currentFullscreenState;
     private Audio bgMusic;
-
+    
     @Override
     public void start() {
-        getMainWindow().setScaleX(3);
-        getMainWindow().setScaleY(3);
         setDrawOrder(100);
         position.setX(0);
         position.setY(10);
+
+        getMainWindow().setWidth(1280);
+        getMainWindow().setHeight(720);
 
         currentFullscreenState = false;
 

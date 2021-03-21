@@ -8,7 +8,6 @@ package sgengine.entity;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import sgengine.Main;
 import sgengine.inteface.SpriteRenderer;
 import sgengine.model.Entity;
 import sgengine.model.Sprite;
@@ -26,8 +25,8 @@ public class Background extends Entity implements SpriteRenderer {
     public void start() {
         setDrawOrder(-100);
 
-        w = Main.WIDTH;
-        h = Main.HEIGHT;
+        w = 150;
+        h = 150;
 
         BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = (Graphics2D) bi.getGraphics();

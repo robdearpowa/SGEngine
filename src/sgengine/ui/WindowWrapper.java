@@ -26,8 +26,7 @@ import sgengine.entity.Camera;
 public class WindowWrapper {
 
     private String title, tag;
-    private int w, h;
-    private double scaleX, scaleY;
+    private int width, height;
 
     private JFrame mainFrame;
     private JPanel mainPanel;
@@ -42,13 +41,11 @@ public class WindowWrapper {
 
     public WindowWrapper(String title, String tag, int w, int h) {
         this.title = title;
-        this.w = w;
-        this.h = h;
+        this.width = w;
+        this.height = h;
         this.tag = tag;
         this.windowListenerList = new ArrayList();
         this.keyEventListenerList = new ArrayList();
-        this.scaleX = 1;
-        this.scaleY = 1;
     }
 
     public String getTitle() {
@@ -57,6 +54,24 @@ public class WindowWrapper {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+        updateScreen();
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+        updateScreen();
     }
 
     public String getTag() {
@@ -95,30 +110,8 @@ public class WindowWrapper {
         }
     }
 
-    public double getScaleX() {
-        return scaleX;
-    }
-
-    public void setScaleX(double scaleX) {
-        this.scaleX = scaleX;
-        updateScreen();
-    }
-
-    public double getScaleY() {
-        return scaleY;
-    }
-
-    public void setScaleY(double scaleY) {
-        this.scaleY = scaleY;
-        updateScreen();
-    }
-
     public Dimension getDimension() {
         return mainPanel != null ? mainPanel.getSize() : null;
-    }
-
-    public Dimension getScaledDimension() {
-        return mainPanel != null ? new Dimension(mainPanel.getSize().width / (int) scaleX, mainPanel.getSize().height / (int) scaleY) : null;
     }
 
     public void drawWindow() {
@@ -214,7 +207,6 @@ public class WindowWrapper {
     public void renderCamera(Camera entity) {
         Graphics2D g2d = (Graphics2D) mainPanel.getGraphics();
         g2d.setPaintMode();
-        g2d.scale(scaleX, scaleY);
         entity.draw(g2d);
     }
 
@@ -259,7 +251,7 @@ public class WindowWrapper {
 
     private void updateScreen() {
         if (mainPanel != null && mainFrame != null) {
-            mainPanel.setPreferredSize(new Dimension(w * (int) scaleX, h * (int) scaleY));
+            mainPanel.setPreferredSize(new Dimension(width, height));
             mainFrame.pack();
         }
     }

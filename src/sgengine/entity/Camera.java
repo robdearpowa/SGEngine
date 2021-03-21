@@ -9,7 +9,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import sgengine.Main;
 import sgengine.inteface.SpriteRenderer;
 import sgengine.inteface.TextRenderer;
 import sgengine.logic.Controller;
@@ -24,6 +23,9 @@ import sgengine.model.Sprite;
  */
 public class Camera extends Entity {
 
+    public final static int DEFAULT_WIDTH = 128;
+    public final static int DEFAULT_HEIGHT = 78;
+
     private BufferedImage frameToRender;
     private Data2D renderingResolution;
 
@@ -34,12 +36,12 @@ public class Camera extends Entity {
     @Override
     public void start() {
         drawOrder = 200;
-        renderingResolution = new Data2D(Main.WIDTH, Main.HEIGHT);
+        renderingResolution = new Data2D(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
     public void draw(Graphics2D g2d) {
         Scene currentScene = Controller.getInstance().getMainLooper().getCurrentScene();
-        Dimension panelDimension = Controller.getInstance().getMainWindow().getScaledDimension();
+        Dimension panelDimension = Controller.getInstance().getMainWindow().getDimension();
 
         if (currentScene != null) {
 

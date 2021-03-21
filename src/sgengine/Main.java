@@ -21,8 +21,8 @@ import sgengine.model.Scene;
 public class Main {
 
     private static Looper mainLooper;
-    public static int WIDTH = 128;
-    public static int HEIGHT = 78;
+    public static int WIDTH = 640;
+    public static int HEIGHT = 480;
 
     /**
      * @param args the command line arguments

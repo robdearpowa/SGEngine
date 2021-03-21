@@ -84,6 +84,9 @@ public class Looper {
 
             }
 
+            //Clear all audio in memory
+            ResourceManager.getInstance().flushAllAudios();
+
             //Exit process
             System.out.println("Update isRunning: " + isRunning);
             System.exit(0);
