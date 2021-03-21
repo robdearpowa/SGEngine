@@ -37,7 +37,7 @@ public class Main {
         mainLooper = Controller.getInstance().getMainLooper();
         mainLooper.start();
 
-        Scene testScene = new Scene("Test_scene", "shoot2.wav", "bg1.wav");
+        Scene testScene = new Scene("Test_scene", "shoot2.wav", "bg1.mid");
         Entity pippo = new TestEntity();
         Entity bg = new Background();
         Entity gameManager = new GameManager();
