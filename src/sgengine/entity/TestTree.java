@@ -5,6 +5,7 @@
  */
 package sgengine.entity;
 
+import sgengine.inteface.Collider;
 import sgengine.inteface.SpriteRenderer;
 import sgengine.model.Data2D;
 import sgengine.model.Entity;
@@ -14,7 +15,7 @@ import sgengine.model.Sprite;
  *
  * @author pi
  */
-public class TestTree extends Entity implements SpriteRenderer {
+public class TestTree extends Entity implements SpriteRenderer, Collider {
 
     private Sprite sprite;
 
@@ -32,6 +33,16 @@ public class TestTree extends Entity implements SpriteRenderer {
     @Override
     public Sprite renderSprite() {
         return sprite;
+    }
+
+    @Override
+    public Data2D getSize() {
+        return sprite.getSize().copy();
+    }
+
+    @Override
+    public Data2D getPivot() {
+        return sprite.getPivot().copy();
     }
 
 }

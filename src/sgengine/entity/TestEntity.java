@@ -6,6 +6,7 @@
 package sgengine.entity;
 
 import java.awt.event.KeyEvent;
+import sgengine.inteface.Collider;
 import sgengine.inteface.SpriteRenderer;
 import sgengine.model.Data2D;
 import sgengine.model.Entity;
@@ -16,7 +17,7 @@ import sgengine.ui.WindowWrapper.KeyEventListener;
  *
  * @author pi
  */
-public class TestEntity extends Entity implements SpriteRenderer, KeyEventListener {
+public class TestEntity extends Entity implements SpriteRenderer, KeyEventListener, Collider {
 
     private Data2D horizontalInput;
     private Data2D verticalInput;
@@ -147,6 +148,21 @@ public class TestEntity extends Entity implements SpriteRenderer, KeyEventListen
                 shooting = false;
                 break;
         }
+    }
+
+    @Override
+    public Data2D getSize() {
+        return sprite.getSize().copy();
+    }
+
+    @Override
+    public Data2D getPivot() {
+        return sprite.getPivot().copy();
+    }
+
+    @Override
+    public void OnCollision(Collider o) {
+        System.out.println("Sto collidendo");
     }
 
     private void spawnBullet() {

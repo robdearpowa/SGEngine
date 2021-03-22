@@ -70,6 +70,18 @@ public class Data2D {
         this.y += other;
     }
 
+    public Data2D plusCopy(Data2D other) {
+        Data2D d = copy();
+        d.plus(other);
+        return d;
+    }
+
+    public Data2D plusCopy(int other) {
+        Data2D d = copy();
+        d.plus(other);
+        return d;
+    }
+
     public void multiply(Data2D other) {
         this.x *= other.x;
         this.y *= other.y;

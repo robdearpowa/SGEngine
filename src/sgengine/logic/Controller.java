@@ -29,6 +29,7 @@ public class Controller {
     private ArrayList<WindowWrapper> windowList;
     private ArrayList<Scene> sceneList;
     private Looper mainLooper;
+    private PhysicsEngine physicsEngine;
 
     private Controller() {
         windowList = new ArrayList();
@@ -90,4 +91,13 @@ public class Controller {
         return sceneList;
     }
 
+    public void createPhysicsEngine() {
+        if (physicsEngine == null) {
+            physicsEngine = new PhysicsEngine();
+        }
+    }
+
+    public PhysicsEngine getPhysicsEngine() {
+        return physicsEngine;
+    }
 }

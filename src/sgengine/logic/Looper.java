@@ -68,6 +68,7 @@ public class Looper {
 
                         if (currentTimeMs > lastTimeMs + 16) {
                             update();
+                            physicsUpdate();
                             lastTimeMs = currentTimeMs;
                         }
 
@@ -151,6 +152,10 @@ public class Looper {
         } catch (Exception e) {
 
         }
+    }
+
+    private void physicsUpdate() {
+        Controller.getInstance().getPhysicsEngine().executePhysics(currentScene);
     }
 
 }

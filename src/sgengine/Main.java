@@ -33,6 +33,7 @@ public class Main {
         System.out.println("Starting mainLooper");
         Controller.getInstance().createMainWindow("RaycasterJ v0.1", WIDTH, HEIGHT);
         Controller.getInstance().createMainLooper();
+        Controller.getInstance().createPhysicsEngine();
 
         mainLooper = Controller.getInstance().getMainLooper();
         mainLooper.start();
