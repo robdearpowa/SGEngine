@@ -21,4 +21,8 @@ public interface Collider {
 
     public default void OnCollision(Collider o) {
     }
+
+    public default boolean drawHitox() {
+        return false;
+    }
 }

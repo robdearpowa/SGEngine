@@ -80,6 +80,11 @@ public class ResourceManager {
 
                 audioStream = AudioSystem.getAudioInputStream(getClass().getResource("/assets/" + resource));
                 clip = AudioSystem.getClip(mInfo);
+
+                if (clip != null) {
+                    audioMap.put(resource, clip);
+                }
+
                 clip.open(audioStream);
 
                 System.out.println("Audio clip isOpen: " + clip.isOpen());
@@ -89,10 +94,6 @@ public class ResourceManager {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-
-        if (clip != null) {
-            audioMap.put(resource, clip);
         }
 
         return clip;
@@ -114,6 +115,7 @@ public class ResourceManager {
     public void flushAllAudios() {
         audioMap.values().forEach(a -> {
             a.close();
+            a.flush();
         });
 
         audioMap.clear();

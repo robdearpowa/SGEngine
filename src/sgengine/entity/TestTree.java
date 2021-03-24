@@ -18,11 +18,15 @@ import sgengine.model.Sprite;
 public class TestTree extends Entity implements SpriteRenderer, Collider {
 
     private Sprite sprite;
+    private Data2D collideSize;
+    private Data2D collidePivot;
 
     @Override
     public void start() {
         sprite = new Sprite("simpletree.png", new Data2D(8, 8));
         sprite.setPivot(new Data2D(4, 8));
+        collideSize = new Data2D(8, 2);
+        collidePivot = new Data2D(4, 2);
     }
 
     @Override
@@ -37,12 +41,17 @@ public class TestTree extends Entity implements SpriteRenderer, Collider {
 
     @Override
     public Data2D getSize() {
-        return sprite.getSize().copy();
+        return collideSize;
     }
 
     @Override
     public Data2D getPivot() {
-        return sprite.getPivot().copy();
+        return collidePivot;
+    }
+
+    @Override
+    public boolean drawHitox() {
+        return true; //To change body of generated methods, choose Tools | Templates.
     }
 
 }

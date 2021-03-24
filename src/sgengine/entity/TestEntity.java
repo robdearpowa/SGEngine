@@ -28,6 +28,8 @@ public class TestEntity extends Entity implements SpriteRenderer, KeyEventListen
     private boolean shooting;
     private int shots = 0;
     private int maxShots = 1;
+    private Data2D collideSize;
+    private Data2D collidePivot;
 
     @Override
     public void start() {
@@ -39,6 +41,8 @@ public class TestEntity extends Entity implements SpriteRenderer, KeyEventListen
         sprite = new Sprite("simpleguy_small.png", new Data2D(8, 8));
         sprite.setPivot(new Data2D(4, 8));
         shooting = false;
+        collideSize = new Data2D(6, 2);
+        collidePivot = new Data2D(3, 2);
 
         getMainWindow().addKeyEventListener(this);
 
@@ -152,17 +156,22 @@ public class TestEntity extends Entity implements SpriteRenderer, KeyEventListen
 
     @Override
     public Data2D getSize() {
-        return sprite.getSize().copy();
+        return collideSize;
     }
 
     @Override
     public Data2D getPivot() {
-        return sprite.getPivot().copy();
+        return collidePivot;
     }
 
     @Override
     public void OnCollision(Collider o) {
         System.out.println("Sto collidendo");
+    }
+
+    @Override
+    public boolean drawHitox() {
+        return true;
     }
 
     private void spawnBullet() {

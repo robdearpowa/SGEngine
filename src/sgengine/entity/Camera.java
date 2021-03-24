@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import sgengine.inteface.SpriteRenderer;
 import sgengine.inteface.TextRenderer;
 import sgengine.logic.Controller;
@@ -25,9 +26,11 @@ public class Camera extends Entity {
 
     public final static int DEFAULT_WIDTH = 128;
     public final static int DEFAULT_HEIGHT = 78;
+    public final static String DEFAULT_TAG = "mainCamera";
 
     private BufferedImage frameToRender;
     private Data2D renderingResolution;
+    private ArrayList<DrawListener> drawListeners = new ArrayList();
 
     public Camera() {
         tag = "mainCamera";
@@ -53,42 +56,60 @@ public class Camera extends Entity {
 
                 Data2D ePos = entity.getPosition();
 
-                if (entity instanceof SpriteRenderer) {
-                    Sprite sprite = ((SpriteRenderer) entity).renderSprite();
-                    BufferedImage spriteData = sprite.getSpriteData();
-
-                    Data2D flipped = new Data2D(
-                            (sprite.isFlippedHorizontal() ? -1 : 1),
-                            (sprite.isFlippedVertical() ? -1 : 1)
-                    );
-
-                    Data2D offset = new Data2D(
-                            (sprite.isFlippedHorizontal() ? spriteData.getWidth() : 0),
-                            (sprite.isFlippedVertical() ? spriteData.getHeight() : 0)
-                    );
-
-                    Data2D pivot = sprite.getPivot();
-
-                    fg2d.drawImage(spriteData,
-                            ePos.getX() - position.getX() + offset.getX() - pivot.getX(),
-                            ePos.getY() - position.getY() + offset.getY() - pivot.getY(),
-                            spriteData.getWidth() * flipped.getX(),
-                            spriteData.getHeight() * flipped.getY(),
-                            null);
-                }
-
-                if (entity instanceof TextRenderer) {
-                    String text = ((TextRenderer) entity).renderText();
-                    Color color = ((TextRenderer) entity).getTextColor();
-
-                    fg2d.setColor(color);
-                    fg2d.drawString(text, ePos.getX(), ePos.getY());
-                }
+                draw(fg2d, entity, ePos);
             });
+
+            drawListeners.forEach(l -> {
+                l.onPostDraw(this, fg2d);
+            });
+            drawListeners.clear();
 
             fg2d.dispose();
 
             g2d.drawImage(frameToRender, 0, 0, panelDimension.width, panelDimension.height, null);
         }
+    }
+
+    public void draw(Graphics2D g2d, Object obj, Data2D ePos) {
+        if (obj instanceof SpriteRenderer) {
+            Sprite sprite = ((SpriteRenderer) obj).renderSprite();
+            BufferedImage spriteData = sprite.getSpriteData();
+
+            Data2D flipped = new Data2D(
+                    (sprite.isFlippedHorizontal() ? -1 : 1),
+                    (sprite.isFlippedVertical() ? -1 : 1)
+            );
+
+            Data2D offset = new Data2D(
+                    (sprite.isFlippedHorizontal() ? spriteData.getWidth() : 0),
+                    (sprite.isFlippedVertical() ? spriteData.getHeight() : 0)
+            );
+
+            Data2D pivot = sprite.getPivot();
+
+            g2d.drawImage(spriteData,
+                    ePos.getX() - position.getX() + offset.getX() - pivot.getX(),
+                    ePos.getY() - position.getY() + offset.getY() - pivot.getY(),
+                    spriteData.getWidth() * flipped.getX(),
+                    spriteData.getHeight() * flipped.getY(),
+                    null);
+        }
+
+        if (obj instanceof TextRenderer) {
+            String text = ((TextRenderer) obj).renderText();
+            Color color = ((TextRenderer) obj).getTextColor();
+
+            g2d.setColor(color);
+            g2d.drawString(text, ePos.getX(), ePos.getY());
+        }
+    }
+
+    public void addDrawListener(DrawListener listener) {
+        drawListeners.add(listener);
+    }
+
+    public interface DrawListener {
+
+        public void onPostDraw(Camera camera, Graphics2D g2d);
     }
 }
