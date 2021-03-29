@@ -80,13 +80,6 @@ public class TestEntity extends Entity implements SpriteRenderer, KeyEventListen
 
         position.plus(movement);
 
-        if (camera != null) {
-            Data2D cameraPos = position.copy();
-            cameraPos.plus(new Data2D(-Camera.DEFAULT_WIDTH / 2, -Camera.DEFAULT_HEIGHT / 2));
-
-            camera.setPosition(cameraPos);
-        }
-
         if (shooting) {
             if (shots < maxShots) {
                 spawnBullet();
@@ -97,6 +90,16 @@ public class TestEntity extends Entity implements SpriteRenderer, KeyEventListen
         }
 
         setDrawOrder(position.getY());
+    }
+
+    @Override
+    public void postPhysics() {
+        if (camera != null) {
+            Data2D cameraPos = position.copy();
+            cameraPos.plus(new Data2D(-Camera.DEFAULT_WIDTH / 2, -Camera.DEFAULT_HEIGHT / 2));
+
+            camera.setPosition(cameraPos);
+        }
     }
 
     @Override

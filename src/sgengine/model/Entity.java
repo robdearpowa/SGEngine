@@ -18,12 +18,18 @@ public abstract class Entity {
 
     protected Data2D position = new Data2D(0, 0);
 
+    private Data2D lastPosition = new Data2D(0, 0);
+
     protected String tag = "default";
 
     public void start() {
     }
 
     public void update() {
+    }
+
+    public void postPhysics() {
+
     }
 
     public int getDrawOrder() {
@@ -40,6 +46,14 @@ public abstract class Entity {
 
     public void setPosition(Data2D position) {
         this.position = position;
+    }
+
+    public Data2D getLastPosition() {
+        return lastPosition;
+    }
+
+    public void saveLastPosition() {
+        lastPosition = position.copy();
     }
 
     public String getTag() {

@@ -69,6 +69,7 @@ public class Looper {
                         if (currentTimeMs > lastTimeMs + 16) {
                             update();
                             physicsUpdate();
+                            postPhysics();
                             lastTimeMs = currentTimeMs;
                         }
 
@@ -127,6 +128,7 @@ public class Looper {
         try {
             if (currentScene != null) {
                 currentScene.getEntityList().forEach(e -> {
+                    e.saveLastPosition();
                     e.update();
                 });
             }
@@ -156,6 +158,18 @@ public class Looper {
 
     private void physicsUpdate() {
         Controller.getInstance().getPhysicsEngine().executePhysics(currentScene);
+    }
+
+    private void postPhysics() {
+        try {
+            if (currentScene != null) {
+                currentScene.getEntityList().forEach(e -> {
+                    e.postPhysics();
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

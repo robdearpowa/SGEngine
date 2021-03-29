@@ -15,6 +15,10 @@ public interface Collider {
 
     public Data2D getPosition();
 
+    public void setPosition(Data2D position);
+
+    public Data2D getLastPosition();
+
     public Data2D getSize();
 
     public Data2D getPivot();
@@ -23,6 +27,14 @@ public interface Collider {
     }
 
     public default boolean drawHitox() {
+        return false;
+    }
+
+    public default boolean trigger() {
+        return false;
+    }
+
+    public default boolean movable() {
         return false;
     }
 }

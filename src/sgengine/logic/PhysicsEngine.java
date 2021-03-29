@@ -43,7 +43,13 @@ public class PhysicsEngine implements Camera.DrawListener {
 
         currentColliders.forEach(c1 -> {
             currentColliders.forEach(c2 -> {
+
                 if (c1.hashCode() != c2.hashCode() && isColliderColliding(c1, c2)) {
+
+                    if (!c1.trigger() && !c2.trigger()) {
+                        c1.setPosition(c1.getLastPosition());
+                    }
+
                     c1.OnCollision(c2);
                 }
             });
@@ -58,10 +64,10 @@ public class PhysicsEngine implements Camera.DrawListener {
 
         cPosition.plus(collider.getPivot().negative());
 
-        return (point.getX() >= cPosition.getX()
-                && point.getY() >= cPosition.getY()
-                && point.getX() <= (cPosition.getX() + cSize.getX())
-                && point.getY() <= (cPosition.getY() + cSize.getY()));
+        return (point.getX() > cPosition.getX()
+                && point.getY() > cPosition.getY()
+                && point.getX() < (cPosition.getX() + cSize.getX())
+                && point.getY() < (cPosition.getY() + cSize.getY()));
     }
 
     public boolean isColliderColliding(Collider c1, Collider c2) {
