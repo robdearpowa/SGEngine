@@ -8,6 +8,7 @@ package sgengine.entity;
 import java.awt.event.KeyEvent;
 import sgengine.inteface.Collider;
 import sgengine.inteface.SpriteRenderer;
+import sgengine.logic.Controller;
 import sgengine.model.Data2D;
 import sgengine.model.Entity;
 import sgengine.model.Sprite;
@@ -78,7 +79,24 @@ public class TestEntity extends Entity implements SpriteRenderer, KeyEventListen
 
         movement.multiply((int) movementSpeed);
 
-        position.plus(movement);
+        Data2D movementH = new Data2D(movement.getX(), 0);
+        Data2D movementV = new Data2D(0, movement.getY());
+
+        position.plus(movementH);
+
+        for (Collider c : Controller.getInstance().getPhysicsEngine().getCurrentColliders()) {
+            if (getPhysicsEngine().isColliderColliding(this, c)) {
+                position.plus(movementH.negative());
+            }
+        }
+
+        position.plus(movementV);
+
+        for (Collider c : Controller.getInstance().getPhysicsEngine().getCurrentColliders()) {
+            if (getPhysicsEngine().isColliderColliding(this, c)) {
+                position.plus(movementV.negative());
+            }
+        }
 
         if (shooting) {
             if (shots < maxShots) {

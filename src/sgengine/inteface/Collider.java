@@ -33,8 +33,4 @@ public interface Collider {
     public default boolean trigger() {
         return false;
     }
-
-    public default boolean movable() {
-        return false;
-    }
 }

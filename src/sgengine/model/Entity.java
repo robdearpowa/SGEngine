@@ -6,6 +6,7 @@
 package sgengine.model;
 
 import sgengine.logic.Controller;
+import sgengine.logic.PhysicsEngine;
 import sgengine.ui.WindowWrapper;
 
 /**
@@ -18,7 +19,7 @@ public abstract class Entity {
 
     protected Data2D position = new Data2D(0, 0);
 
-    private Data2D lastPosition = new Data2D(0, 0);
+    protected Data2D lastPosition = new Data2D(0, 0);
 
     protected String tag = "default";
 
@@ -70,6 +71,10 @@ public abstract class Entity {
 
     protected Scene getCurrentScene() {
         return Controller.getInstance().getMainLooper().getCurrentScene();
+    }
+
+    protected PhysicsEngine getPhysicsEngine() {
+        return Controller.getInstance().getPhysicsEngine();
     }
 
     protected void kill() {

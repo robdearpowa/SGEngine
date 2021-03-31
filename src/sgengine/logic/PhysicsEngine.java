@@ -22,39 +22,28 @@ import sgengine.model.Sprite;
  */
 public class PhysicsEngine implements Camera.DrawListener {
 
-    private ArrayList<Collider> currentColliders;
-
-    public void executePhysics(Scene scene) {
-        currentColliders = new ArrayList();
-
+    public ArrayList<Collider> getCurrentColliders() {
+        Scene scene = Controller.getInstance().getMainLooper().getCurrentScene();
+        ArrayList<Collider> result = new ArrayList();
         if (scene != null) {
             scene.getEntityList().forEach(e -> {
                 if (e instanceof Collider) {
-                    currentColliders.add((Collider) e);
+                    result.add((Collider) e);
                 }
             });
+        }
 
+        return result;
+    }
+
+    public void executePhysics(Scene scene) {
+        if (scene != null) {
             scene.getCameraList().forEach(c -> {
                 if (Camera.DEFAULT_TAG.equals(c.getTag())) {
                     c.addDrawListener(this);
                 }
             });
         }
-
-        currentColliders.forEach(c1 -> {
-            currentColliders.forEach(c2 -> {
-
-                if (c1.hashCode() != c2.hashCode() && isColliderColliding(c1, c2)) {
-
-                    if (!c1.trigger() && !c2.trigger()) {
-                        c1.setPosition(c1.getLastPosition());
-                    }
-
-                    c1.OnCollision(c2);
-                }
-            });
-        });
-
     }
 
     public boolean isPointColliding(Data2D point, Collider collider) {
@@ -72,21 +61,34 @@ public class PhysicsEngine implements Camera.DrawListener {
 
     public boolean isColliderColliding(Collider c1, Collider c2) {
 
-        Data2D c1Position = c1.getPosition().copy();
-        Data2D c1Size = c1.getSize().copy();
+        if (c1.hashCode() == c2.hashCode() || c1.trigger() || c2.trigger()) {
+            return false;
+        }
 
-        c1Position.plus(c1.getPivot().negative());
+        Data2D c1p1 = c1.getPosition().copy();
+        c1p1.plus(c1.getPivot().negative());
 
-        return (isPointColliding(c1Position, c2)
-                || isPointColliding(c1Position.plusCopy(c1Size), c2)
-                || isPointColliding(c1Position.plusCopy(new Data2D(c1Size.getX(), 0)), c2)
-                || isPointColliding(c1Position.plusCopy(new Data2D(0, c1Size.getY())), c2));
+        Data2D c1p2 = c1p1.plusCopy(c1.getSize());
 
+        Data2D c2p1 = c2.getPosition().copy();
+        c2p1.plus(c2.getPivot().negative());
+
+        Data2D c2p2 = c2p1.plusCopy(c2.getSize());
+
+        if (c1p1.getX() >= c2p2.getX() || c2p1.getX() >= c1p2.getX()) {
+            return false;
+        }
+
+        if (c1p1.getY() >= c2p2.getY() || c2p1.getY() >= c1p2.getY()) {
+            return false;
+        }
+
+        return true;
     }
 
     @Override
     public void onPostDraw(Camera camera, Graphics2D g2d) {
-        currentColliders.forEach(c -> {
+        getCurrentColliders().forEach(c -> {
             if (c.drawHitox()) {
                 Data2D cPosition = c.getPosition().copy();
                 Data2D cSize = c.getSize().copy();
