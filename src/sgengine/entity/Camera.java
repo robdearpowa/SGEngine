@@ -29,17 +29,25 @@ public class Camera extends Entity {
     public final static String DEFAULT_TAG = "mainCamera";
 
     private BufferedImage frameToRender;
-    private Data2D renderingResolution;
+    private Data2D renderingResolution = new Data2D(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+
     private ArrayList<DrawListener> drawListeners = new ArrayList();
 
     public Camera() {
         tag = "mainCamera";
     }
 
+    public Data2D getRenderingResolution() {
+        return renderingResolution;
+    }
+
+    public void setRenderingResolution(Data2D renderingResolution) {
+        this.renderingResolution = renderingResolution;
+    }
+
     @Override
     public void start() {
         drawOrder = 200;
-        renderingResolution = new Data2D(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
     public void draw(Graphics2D g2d) {

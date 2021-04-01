@@ -37,7 +37,11 @@ public class GameManager extends Entity implements TextRenderer, KeyEventListene
         position.setY(10);
 
         getMainWindow().setWidth(800);
-        getMainWindow().setHeight(600);
+        getMainWindow().setHeight(450);
+
+        getCurrentScene().getCameraList().forEach(c -> {
+            c.setRenderingResolution(new Data2D(160, 90));
+        });
 
         currentFullscreenState = false;
 

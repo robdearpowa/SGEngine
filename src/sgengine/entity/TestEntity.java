@@ -23,6 +23,7 @@ public class TestEntity extends Entity implements SpriteRenderer, KeyEventListen
     private Data2D horizontalInput;
     private Data2D verticalInput;
     private Data2D movement;
+    private Data2D lastDirection;
     private float movementSpeed;
     private Sprite sprite;
     private Camera camera;
@@ -38,6 +39,7 @@ public class TestEntity extends Entity implements SpriteRenderer, KeyEventListen
         horizontalInput = new Data2D();
         verticalInput = new Data2D();
         movement = new Data2D();
+        movement = new Data2D(1, 0);
         movementSpeed = 1;
         sprite = new Sprite("simpleguy_small.png", new Data2D(8, 8));
         sprite.setPivot(new Data2D(4, 8));
@@ -77,6 +79,8 @@ public class TestEntity extends Entity implements SpriteRenderer, KeyEventListen
             }
         }
 
+        lastDirection = movement.equals(Data2D.ZERO) ? lastDirection : movement.copy();
+
         movement.multiply((int) movementSpeed);
 
         Data2D movementH = new Data2D(movement.getX(), 0);
@@ -114,7 +118,8 @@ public class TestEntity extends Entity implements SpriteRenderer, KeyEventListen
     public void postPhysics() {
         if (camera != null) {
             Data2D cameraPos = position.copy();
-            cameraPos.plus(new Data2D(-Camera.DEFAULT_WIDTH / 2, -Camera.DEFAULT_HEIGHT / 2));
+            Data2D cameraRes = camera.getRenderingResolution();
+            cameraPos.plus(new Data2D(-cameraRes.getX() / 2, -cameraRes.getY() / 2));
 
             camera.setPosition(cameraPos);
         }
@@ -198,8 +203,8 @@ public class TestEntity extends Entity implements SpriteRenderer, KeyEventListen
     private void spawnBullet() {
         BulletEntity b = new BulletEntity();
 
-        b.setPosition(position.copy());
-        b.setDirection(new Data2D(1, 0));
+        b.setPosition(position.plusCopy(new Data2D(0, -4)));
+        b.setDirection(lastDirection.copy());
 
         getCurrentScene().addToEntityList(b);
     }

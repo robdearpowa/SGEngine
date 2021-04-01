@@ -26,10 +26,15 @@ public class BulletEntity extends Entity implements SpriteRenderer {
     @Override
     public void start() {
         sprite = new Sprite("simple_bullet.png", new Data2D(4, 4));
+        sprite.setPivot(new Data2D(2, 2));
         speed = 2;
         life = System.currentTimeMillis();
         Audio audio = new Audio("shoot2.wav");
         audio.play();
+
+        if (direction.getX() < 0) {
+            sprite.setFlippedHorizontal(true);
+        }
     }
 
     @Override
