@@ -41,11 +41,12 @@ public class TestEntity extends Entity implements SpriteRenderer, KeyEventListen
         movement = new Data2D();
         movement = new Data2D(1, 0);
         movementSpeed = 1;
-        sprite = new Sprite("simpleguy_small.png", new Data2D(8, 8));
-        sprite.setPivot(new Data2D(4, 8));
+        sprite = new Sprite("monk1.png", new Data2D(16, 16));
+        sprite.setPivot(new Data2D(8, 16));
+
         shooting = false;
-        collideSize = new Data2D(6, 2);
-        collidePivot = new Data2D(3, 2);
+        collideSize = new Data2D(16, 4);
+        collidePivot = new Data2D(8, 4);
 
         getMainWindow().addKeyEventListener(this);
 
@@ -131,12 +132,14 @@ public class TestEntity extends Entity implements SpriteRenderer, KeyEventListen
     }
 
     @Override
-    public void onKeyTyped(KeyEvent e) {
+    public void onKeyTyped(KeyEvent e
+    ) {
 
     }
 
     @Override
-    public void onKeyPressed(KeyEvent e) {
+    public void onKeyPressed(KeyEvent e
+    ) {
         System.out.println("Key pressed " + e.getKeyChar());
         switch (e.getKeyCode()) {
             case KeyEvent.VK_W:
@@ -158,7 +161,8 @@ public class TestEntity extends Entity implements SpriteRenderer, KeyEventListen
     }
 
     @Override
-    public void onKeyReleased(KeyEvent e) {
+    public void onKeyReleased(KeyEvent e
+    ) {
         System.out.println("Key released " + e.getKeyChar());
 
         switch (e.getKeyCode()) {
@@ -191,7 +195,8 @@ public class TestEntity extends Entity implements SpriteRenderer, KeyEventListen
     }
 
     @Override
-    public void OnCollision(Collider o) {
+    public void OnCollision(Collider o
+    ) {
         System.out.println("Sto collidendo");
     }
 

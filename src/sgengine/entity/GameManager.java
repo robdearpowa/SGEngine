@@ -68,15 +68,13 @@ public class GameManager extends Entity implements TextRenderer, KeyEventListene
         getCurrentScene().addAllToEntityList(treeList);
         getMainWindow().addKeyEventListener(this);
 
-        bgMusic = new Audio("bg1.mid");
-        bgMusic.play();
+        //bgMusic = new Audio("bg1.mid");
+        //bgMusic.play();
     }
 
     @Override
     public void update() {
-        if (!bgMusic.isPlaying()) {
-
-        }
+        //if (!bgMusic.isPlaying()) {
     }
 
     @Override

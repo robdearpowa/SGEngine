@@ -6,6 +6,7 @@
 package sgengine.entity;
 
 import sgengine.inteface.SpriteRenderer;
+import sgengine.model.Animation;
 import sgengine.model.Audio;
 import sgengine.model.Data2D;
 import sgengine.model.Entity;
@@ -22,11 +23,26 @@ public class BulletEntity extends Entity implements SpriteRenderer {
     private int speed;
     private long life = 0;
     private long maxLife = 3000;
+    private Animation<Sprite> anim;
 
     @Override
     public void start() {
-        sprite = new Sprite("simple_bullet.png", new Data2D(4, 4));
-        sprite.setPivot(new Data2D(2, 2));
+        sprite = new Sprite("ban1.png", new Data2D(16, 16));
+        sprite.setPivot(new Data2D(4, 12));
+
+        Sprite frame1 = sprite.copy();
+        Sprite frame2 = sprite.copy();
+        Sprite frame3 = sprite.copy();
+        Sprite frame4 = sprite.copy();
+        Sprite frame5 = sprite.copy();
+
+        frame2.setRotation(72);
+        frame3.setRotation(144);
+        frame4.setRotation(216);
+        frame5.setRotation(288);
+
+        anim = new Animation(100, frame1, frame2, frame3, frame4, frame5);
+
         speed = 2;
         life = System.currentTimeMillis();
         Audio audio = new Audio("shoot2.wav");
@@ -35,6 +51,17 @@ public class BulletEntity extends Entity implements SpriteRenderer {
         if (direction.getX() < 0) {
             sprite.setFlippedHorizontal(true);
         }
+
+        if (direction.getX() == 0) {
+            if (direction.getY() < 0) {
+                sprite.setRotation(-90);
+            }
+
+            if (direction.getY() > 0) {
+                sprite.setRotation(90);
+            }
+        }
+
     }
 
     @Override
@@ -45,6 +72,9 @@ public class BulletEntity extends Entity implements SpriteRenderer {
         position.plus(movement);
 
         long currentLife = System.currentTimeMillis();
+
+        sprite = anim.getFrameAtTime(currentLife);
+
         if (currentLife > life + maxLife) {
             kill();
         }

@@ -20,6 +20,8 @@ public class Sprite {
     private boolean flippedHorizontal;
     private boolean flippedVertical;
     private Data2D pivot;
+    private float rotation;
+    private float scale;
 
     public Sprite(String resource, Data2D size) {
         setResource(resource);
@@ -27,6 +29,8 @@ public class Sprite {
         setFlippedHorizontal(false);
         setFlippedVertical(false);
         setPivot(new Data2D(0, 0));
+        setRotation(0);
+        setScale(1);
     }
 
     public Sprite(BufferedImage spriteData) {
@@ -34,6 +38,8 @@ public class Sprite {
         setFlippedHorizontal(false);
         setFlippedVertical(false);
         setPivot(new Data2D(0, 0));
+        setRotation(0);
+        setScale(1);
     }
 
     public Data2D getSize() {
@@ -87,6 +93,33 @@ public class Sprite {
 
     public void setPivot(Data2D pivot) {
         this.pivot = pivot;
+    }
+
+    public float getRotation() {
+        return rotation;
+    }
+
+    public void setRotation(float rotation) {
+        this.rotation = rotation;
+    }
+
+    public float getScale() {
+        return scale;
+    }
+
+    public void setScale(float scale) {
+        this.scale = scale;
+    }
+
+    public Sprite copy() {
+        Sprite result = new Sprite(spriteData);
+        result.pivot = pivot.copy();
+        result.flippedHorizontal = flippedHorizontal;
+        result.flippedVertical = flippedVertical;
+        result.rotation = rotation;
+        result.scale = scale;
+
+        return result;
     }
 
 }

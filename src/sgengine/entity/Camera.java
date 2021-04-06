@@ -8,6 +8,7 @@ package sgengine.entity;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import sgengine.inteface.SpriteRenderer;
@@ -95,12 +96,18 @@ public class Camera extends Entity {
 
             Data2D pivot = sprite.getPivot();
 
-            g2d.drawImage(spriteData,
-                    ePos.getX() - position.getX() + offset.getX() - pivot.getX(),
-                    ePos.getY() - position.getY() + offset.getY() - pivot.getY(),
-                    spriteData.getWidth() * flipped.getX(),
-                    spriteData.getHeight() * flipped.getY(),
-                    null);
+            Data2D ePosC = ePos.plusCopy(pivot.negative());
+
+            AffineTransform transform = new AffineTransform();
+
+            transform.translate(ePosC.getX() - position.getX() + offset.getX(),
+                    ePosC.getY() - position.getY() + offset.getY());
+
+            transform.scale(flipped.getX(), flipped.getY());
+
+            transform.rotate(Math.toRadians(sprite.getRotation()), pivot.getX(), pivot.getY());
+
+            g2d.drawImage(spriteData, transform, null);
         }
 
         if (obj instanceof TextRenderer) {
